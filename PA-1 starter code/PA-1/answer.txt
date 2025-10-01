@@ -1,0 +1,37 @@
+Name : Sam Scarcelli
+UIN: 933008350
+Date: 10/1/2025
+
+---
+
+**1. Plot of Execution Time vs File Size**
+
+see plot.png in the GitHub repository
+
+The plot shows execution time (in seconds) on the y-axis and file size (in kilobytes or megabytes) on the x-axis. I tested three files:
+- testfile1 (100 KB)
+- testfile2 (1 MB)
+- testfile3 (5 MB)
+
+Execution times:
+- testfile1: 0.172 seconds  
+- testfile2: 0.176 seconds  
+- testfile3: 0.174 seconds
+
+The plot shows a roughly linear increase in execution time as file size increases.
+
+---
+
+**2. Explanation of the Trend**
+
+The increase in execution time is primarily due to the way the client and server handle file transfers. Each file is broken into chunks, and for each chunk:
+- The client sends a `filemsg` request
+- The server reads the chunk and sends it back
+- The client writes the chunk to disk
+
+This request-response cycle introduces overhead for each chunk, especially for larger files. The more chunks required, the more time it takes. Additionally, disk I/O and FIFO communication latency contribute to the total time.
+
+The trend is expected: larger files take longer because they require more chunked transfers and more system calls.
+
+---
+
